@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container text-align-center">
+        <div class="jumbotron">
+            <div class="main-comment-section">
+                <p>{{ post.topic }}</p>
+                <p>{{ post.date }}</p>
+                <p> By<a href="{% url 'basic:view_profile' user=post.author %}"> {{ post.author|capfirst }}</p></a>
+                <p>{{ post.content }}</p>
+                <form class="form-group-row" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if post.video_clips %}
+                        <video controls width='50%' height='40%'>
+                            <source src="{{ post.video_clips.url }}">
+                        </video>
+                    {% endif %}
+                    {% if post.images %}
+                        <img src="{{ post.images.url }}" height="100">
+                    {% endif %}
+                    {% if post.site_url %}
+                        Site: <a href="{{ post.site_url }}">{{ post.site_url }}</a>
+                    {% endif %}
+                </form>
+                <div class="d-flex flex-lg-row justify-content-between">
+                    
+                    <a href="{% url 'basic:comment_view' id=post.id %}" >Total Comments = {{ comments.count }}</a>
+                    {% if post.author != request.user %}
+                        <a href="{% url 'basic:comment_create_view' id=post.id %}" class="btn btn-info btn-sm" role="button" aria-disabled="true">New Comment</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

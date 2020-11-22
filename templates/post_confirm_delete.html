@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container text-align-center">
+    <div class="jumbotron">
+        {{ post }}<br>
+        By {{ post.author|capfirst }}<br>
+        <p><strong>WARNING : </strong>Do you really want to delete this post? All the comments following this post will also get deleted!</p>
+        <form action="{% url 'basic:delete_post' pk=post.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger btn=sm" type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

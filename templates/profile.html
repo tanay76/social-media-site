@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Details :</h1>
+                {% if msg %}
+                    <h4>{{ msg }}</h4>
+                {% else %}
+                    <ol>
+                        <li><h3>User Id : {{ user.id }}</h3></li>
+                        <li><h3>Firstname : {{ user.first_name }}</h3></li>
+                        <li><h3>Lastname : {{ user.last_name }}</h3></li>
+                        <li><h3>Username : {{ user }}</h3></li>
+                        <li><h3>Email ID : {{ user.email }}</h3></li>
+                        <li><h3>Profile Pic :</h3>
+                        {% if profile_pic %}
+                            <img src="{{ profile_pic.url }}" height="200">
+                        {% endif %}
+                        </li>
+                    </ol>
+                {% endif %}
+        </div>
+    </div>
+{% endblock %}

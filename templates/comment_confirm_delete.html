@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container text-align-center">
+    <div class="jumbotron">
+        {% if comment %}
+            {{ comment }}<br>
+            By {{ comment.author|capfirst }}<br>
+            <p><strong>WARNING : </strong>Do you really want to delete this comment? All the comments following this post will also get deleted!</p>
+            <form action="{% url 'basic:delete_comment' pk=comment.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger btn=sm" type="submit">Delete</button>
+            </form>
+        {% elif reply %}
+            {{ reply }}<br>
+            By {{ reply.author|capfirst }}<br>
+            <p><strong>WARNING : </strong>Do you really want to delete this comment? All the comments following this post will also get deleted!</p>
+            <form action="{% url 'basic:delete_comment' pk=reply.id %}" method="POST">{% csrf_token %}
+                <button class="btn btn-danger btn=sm" type="submit">Delete</button>
+            </form>
+        {% endif %}
+        
+    </div>
+</div>
+{% endblock %}

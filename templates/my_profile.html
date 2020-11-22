@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Your Details :</h1>
+                {% if user %}
+                    <ol>
+                        <li><h3>Your User Id : {{ user.id }}</h3></li>
+                        <li><h3>Your Firstname : {{ user.first_name }}</h3></li>
+                        <li><h3>Your Lastname : {{ user.last_name }}</h3></li>
+                        <li><h3>Your Username : {{ user }}</h3></li>
+                        <li><h3>Your Email ID : {{ user.email }}</h3></li>
+                        <li><h3>Your Profile Pic :</h3>
+                            {% if user.userprofileinfo.profile_pic %}
+                                <img src="{{ user.userprofileinfo.profile_pic.url }}" height="200">
+                            {% else %}
+                                <p>You haven't uploaded any profile picture yet.</p>
+                            {% endif %}
+                        </li>
+                    </ol>  
+                {% endif %}
+            <form>
+                {% csrf_token %}
+                <div class="btn-group">
+                    <button class="btn btn-warning" type="submit"><a href="{% url 'basic:userupdate' id=user.id %}" class="text-dark">Update</a></button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" type="submit"><a href="{% url 'basic:uploadpropic' pk=user.userprofileinfo.id %}" class="text-light">Update Profile Pic</a></button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-danger" type="submit"><a href="{% url 'basic:confirm_deletion' pk=user.id %}" class="text-white">Delete</a></button>
+                </div>   
+            </form>
+        </div>
+    </div>
+{% endblock %}

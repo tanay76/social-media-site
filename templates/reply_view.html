@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h3>Regarding :</h3>
+<div class="container text-align-center">
+    <div class="jumbotron">
+        <div class="main-comment-section">
+
+            <p>{{ comment.date }}</p>
+            <p> By <a href="{% url 'basic:view_profile' user=comment.author %}">{{ comment.author|capfirst }}</p></a>
+            <p>{{ comment.content }}</p>
+            <form class="form-group-row" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if comment.video_clips %}
+                    <div id='media-player'>
+                        <video id='media-video' preload="auto" controls>
+
+                            <source src="{{ comment.video_clips.url }}">
+                        </video>
+                        <div id='media-controls'></div>
+                    </div>
+                {% endif %}
+                {% if comment.images %}
+                    <img src="{{ comment.images.url }}" height="100">
+                {% endif %}
+                {% if comment.site_url %}
+                    Site: <a href="{{ comment.site_url }}">{{ comment.site_url }}</a>
+                {% endif %}
+            </form>
+            <div class="d-flex flex-lg-row justify-content-between">
+
+                <a href="{% url 'basic:reply_view' id=comment.id %}" >See Replies</a>
+                {{ comment.total_likes }} Like {{ likes|pluralize }}
+                {{ comment.total_dislikes }} Dislike {{ dislikes|pluralize }}
+                {% if comment.author != request.user %}
+                    <form action="{% url 'basic:like_comment' %}" method="POST">
+                        {% csrf_token %}
+                        <button style="font-size:24px" name="comment_id" value="{{ comment.id }}" ><i class="fa fa-thumbs-up" style="color:green"></i></button>
+                    </form>
+                    <form action="{% url 'basic:dislike_comment' %}" method="POST">
+                        {% csrf_token %}
+                        <button style="font-size:24px" name="comment_id" value="{{ comment.id }}" ><i class="fa fa-thumbs-down" style="color:red"></i></button>
+                    </form>
+                    <a href="{% url 'basic:reply_create_view' id=comment.id %}" class="btn btn-info btn-sm" role="button" aria-disabled="true">New Reply</a>
+                {% endif %}
+                {% if comment.author == request.user %}
+                    <a href="{% url 'basic:confirm_comment_deletion_view' id=comment.id %}" class="btn btn-danger btn-sm" role="button" aria-disabled="true">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br><br>
+
+<h3>Replies :</h3>
+<div class="container text-align-center">
+    <div class="jumbotron">
+        <div class="main-comment-section">
+            {% if replies %}
+                {% for reply in replies %}
+                    <p>{{ reply.date }}</p>
+                    <p> By <a href="{% url 'basic:view_profile' user=reply.author %}">{{ reply.author|capfirst }}</p></a>
+                    <p>{{ reply.content }}</p>
+                    <form class="form-group-row" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if reply.video_clips %}
+                            <div id='media-player'>
+                                <video id='media-video' preload="auto" controls>
+
+                                    <source src="{{ reply.video_clips.url }}">
+                                </video>
+                                <div id='media-controls'></div>
+                            </div>
+                        {% endif %}
+                        {% if reply.images %}
+                            <img src="{{ reply.images.url }}" height="100">
+                        {% endif %}
+                        {% if reply.site_url %}
+                            Site: <a href="{{ reply.site_url }}">{{ reply.site_url }}</a>
+                        {% endif %}
+                    </form>
+                    <div class="d-flex flex-lg-row justify-content-between">
+
+                        <a href="{% url 'basic:reply_view' id=reply.id %}" >See Replies</a>
+                        {{ comment.total_likes }} Like {{ likes|pluralize }}
+                        {{ comment.total_dislikes }} Dislike {{ dislikes|pluralize }}
+                        {% if reply.author != request.user %}
+                        <form action="{% url 'basic:like_comment' %}" method="POST">
+                            {% csrf_token %}
+                            <button style="font-size:24px" name="reply_id" value="{{ reply.id }}" >Like <i class="fa fa-thumbs-up" style="color:green"></i></button>
+                        </form>
+                        <form action="{% url 'basic:dislike_comment' %}" method="POST">{% csrf_token %}
+                            <button style="font-size:24px" name="reply_id" value="{{ reply.id }}" >Dislike <i class="fa fa-thumbs-down" style="color:red"></i></button>
+                        </form>
+                            <a href="{% url 'basic:reply_create_view' id=reply.id %}" class="btn btn-info btn-sm" role="button" aria-disabled="true">New Reply</a>
+                        {% endif %}
+                        {% if reply.author == request.user %}
+                            <a href="{% url 'basic:confirm_reply_deletion_view' id=reply.id %}" class="btn btn-danger btn-sm" role="button" aria-disabled="true">Delete</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <strong> No Reply has yet been post reagarding the above Post. </strong>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

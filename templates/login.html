@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4 text-center abc">
+            <form action="{% url 'basic:user_login' %}" method="POST">
+                {% csrf_token %}
+                <p class="h4 mb-4 text-left">Login to continue</p>
+                <p class="text-left">Signin to get connect to this Blogging Site.</p>
+                {% if error %}
+                    <ul>
+                        <li style="color: red;">{{error}}</li>
+                        <li style="color: red;">Please, click on LogIn page to try again.</li>
+                    </ul> 
+                {% endif %} 
+                <label for="username" class="in">Username</label> 
+                <input type="text" id="username" name="username" class="form-control mb-4" placeholder="Enter Username"><br> 
+                <label for="password" class="in">Password</label> 
+                <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Enter Password">
+                <div class="d-flex justify-content-center">
+                    <!-- <div>
+                        <!-- Remember me -->
+                        <!-- <div class="custom-control custom-checkbox text-left"> <input type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label> </div>
+                    </div> --> 
+                </div> 
+                <!-- Sign in button --> 
+                <button class="btn btn-info btn-block " type="submit" style="background-image: url(https://i.imgur.com/6YuRxJA.png)">LOGIN</button>
+                <a href="{% url 'password_reset' %}">Forgot Password</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

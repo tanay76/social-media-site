@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Members of this Blog :</h1>
+                {% if users %}
+                    <ol>
+                    {% for user in users %}
+                        <li><p>{{ user.first_name }} {{ user.last_name }}--><a href="{% url 'basic:view_profile' user=user.username %}">{{ user.username|capfirst }}</a>-->{{ user.id }}</p></li>
+                    {% endfor %}
+                    </ol>
+                {% else %}
+                    <p>No members are available.</p>
+                {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <div class="container text-align-center">
+        <div class="jumbotron">
+            <ol>
+                <li><a href="{% url 'basic:post_detail_view' pt='Science & Tech' %}">Science & Tech</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Politics' %}">Politics</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Economics,Markets,Taxes & Investments' %}">Economics,Markets,Taxes & Investments</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Literature' %}">Literature</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Cooking' %}">Cooking</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Food' %}">Food Items</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Art & Culture' %}">Art & Culture</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Law' %}">Law</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Religions' %}">Religions</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Fashion & Design' %}">Fashion & Design</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Healthcare,Exercises & Medical' %}">Healthcare,Exercises & Medical</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Games & Sports' %}">Games & Sports</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Beauty of Nature' %}">Beauty of Nature</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Jokes' %}">Jokes</a></li>
+                <li><a href="{% url 'basic:post_detail_view' pt='Others' %}">Others</a></li>
+            </ol>
+        </div>
+    </div>
+
+{% endblock %}
